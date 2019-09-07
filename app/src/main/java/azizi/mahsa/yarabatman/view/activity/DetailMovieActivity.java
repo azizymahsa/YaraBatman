@@ -1,5 +1,6 @@
 package azizi.mahsa.yarabatman.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -46,13 +47,20 @@ public class DetailMovieActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        onSearch();
+        
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            extras.getString("img");
+            extras.getString("title");
+            extras.getString("id");
+            search(extras.getString("id"));
 
-
+        }
     }
 
-    private void onSearch() {
-        mMovieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+    private void search(String id) {
+       // mMovieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+        mMovieViewModel .getMovieDetail(id);
         mMovieViewModel.getMovieDetailObservable()
                 .observe(this, new ApiObserver<JMovieDetail>() {
 

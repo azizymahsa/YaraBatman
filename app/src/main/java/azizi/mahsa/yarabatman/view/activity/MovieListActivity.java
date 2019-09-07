@@ -47,8 +47,9 @@ public class MovieListActivity extends AppCompatActivity {
             public void onMovieClick(String imdbId,String img,String tittle) {
                 Toast.makeText(MovieListActivity.this, "Movie Clicked ->" + imdbId, Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(MovieListActivity.this, DetailMovieActivity.class);
-                myIntent.putExtra("img", imdbId); //Optional parameters
-                myIntent.putExtra("title", tittle); //Optional parameters
+                myIntent.putExtra("img", imdbId);
+                myIntent.putExtra("title", tittle);
+                myIntent.putExtra("id", imdbId);
                 MovieListActivity.this.startActivity(myIntent);
             }
         });
