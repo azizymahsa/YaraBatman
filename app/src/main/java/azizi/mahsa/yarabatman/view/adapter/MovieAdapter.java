@@ -66,7 +66,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
                 @Override
                 public void onClick(View view) {
                     if (mClickListener != null) {
-                        mClickListener.onMovieClick(mItems.get(getAdapterPosition()).getImdbID());
+                        mClickListener.onMovieClick(mItems.get(getAdapterPosition()).getImdbID(),mItems.get(getAdapterPosition()).getPoster(),String.format(Locale.US, "%s (%s)", mItems.get(getAdapterPosition()).getTitle(), mItems.get(getAdapterPosition()).getYear()));
                     }
                 }
             });
@@ -81,6 +81,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     }
 
     public interface OnMovieClickListener {
-        public void onMovieClick(String imdbId);
+        public void onMovieClick(String imdbId,String img,String tittle);
     }
 }

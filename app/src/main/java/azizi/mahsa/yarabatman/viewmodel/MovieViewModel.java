@@ -28,6 +28,9 @@ public class MovieViewModel extends AndroidViewModel {
     public void searchMovies() {
         repo.searchMovies();
     }
+    public void searchDetails() {
+        repo.searchDetails();
+    }
 
     public LiveData<Response<JMovieDetail>> getMovieDetailObservable() {
         return repo.getMovieDetailObservable();

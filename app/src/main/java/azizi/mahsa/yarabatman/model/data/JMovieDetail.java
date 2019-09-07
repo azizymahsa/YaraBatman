@@ -5,7 +5,15 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "detail")
 public class JMovieDetail {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "_id")
+    private transient long id;
 
     @SerializedName("Title")
     @Expose

@@ -1,5 +1,6 @@
 package azizi.mahsa.yarabatman.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -43,8 +44,12 @@ public class MovieListActivity extends AppCompatActivity {
         list.setAdapter(mAdapter);
         mAdapter.setOnMovieClickListener(new MovieAdapter.OnMovieClickListener() {
             @Override
-            public void onMovieClick(String imdbId) {
+            public void onMovieClick(String imdbId,String img,String tittle) {
                 Toast.makeText(MovieListActivity.this, "Movie Clicked ->" + imdbId, Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(MovieListActivity.this, DetailMovieActivity.class);
+                myIntent.putExtra("img", imdbId); //Optional parameters
+                myIntent.putExtra("title", tittle); //Optional parameters
+                MovieListActivity.this.startActivity(myIntent);
             }
         });
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);

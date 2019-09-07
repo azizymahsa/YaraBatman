@@ -7,8 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import azizi.mahsa.yarabatman.model.data.JMovie;
+import azizi.mahsa.yarabatman.model.data.JMovieDetail;
 
-@Database(entities = {JMovie.class}, version = 1, exportSchema = false)
+@Database(entities = {JMovie.class,JMovieDetail.class}, version = 4, exportSchema = false)
 public abstract class MovieDatabase extends RoomDatabase {
 
     public static MovieDatabase createInstance(Context context) {
@@ -21,4 +22,5 @@ public abstract class MovieDatabase extends RoomDatabase {
     }
 
     public abstract MovieDao getMovieDao();
+    public abstract DetailDao getDetailDao();
 }
