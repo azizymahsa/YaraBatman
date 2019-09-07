@@ -63,7 +63,7 @@ public class MovieListActivity extends AppCompatActivity {
             public void onRefresh() {
 
                mAdapter.clear();
-               onSearch();
+               mMovieViewModel.searchMovies();
             }
         });
     }
