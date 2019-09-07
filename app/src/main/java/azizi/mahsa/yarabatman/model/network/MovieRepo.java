@@ -56,18 +56,18 @@ public class MovieRepo {
         }
     }
 
-    public void searchDetails() {
-       JMovieDetail cachedDetails = mDetailDao.getAll();
-        if (cachedDetails == null ) {
-            fetchDetailsMovieFromNetwork();
+    public void getDetails(String id) {
+       JMovieDetail cachedDetail = mDetailDao.getDetail(id);
+        if (cachedDetail == null ) {
+            fetchDetailsMovieFromNetwork(id);
         } else {
-            movieDetailObservable.setValue(new Response.Builder<JMovieDetail>().success(cachedDetails));
+            movieDetailObservable.setValue(new Response.Builder<JMovieDetail>().success(cachedDetail));
             toast("Data received from database!!!");
         }
     }
 
-    private void fetchDetailsMovieFromNetwork() {
-        Call<JMovieDetail> call = mApi.getMovieDetail(OmdbApi.API_KEY, SEARCH_KEYWORD);
+    private void fetchDetailsMovieFromNetwork(String id) {
+        Call<JMovieDetail> call = mApi.getMovieDetail(OmdbApi.API_KEY, id);
         movieDetailObservable.setValue(new Response.Builder<JMovieDetail>().loading());
         call.enqueue(new ApiCallback<JMovieDetail>() {
             @Override
@@ -105,10 +105,7 @@ public class MovieRepo {
     }
 
 
-    public void getMovieDetail(String imdbId) {
-        Call<JMovieDetail> call = mApi.getMovieDetail(OmdbApi.API_KEY, imdbId);
-        ApiRequestHelper.request(call, movieDetailObservable);
-    }
+
 
     private void toast(String msg) {
         Context context = mWeakContext.get();

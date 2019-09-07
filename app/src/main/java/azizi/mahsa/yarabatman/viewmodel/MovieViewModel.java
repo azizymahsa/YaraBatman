@@ -28,15 +28,13 @@ public class MovieViewModel extends AndroidViewModel {
     public void searchMovies() {
         repo.searchMovies();
     }
-    public void searchDetails() {
-        repo.searchDetails();
+    public void getMovieDetail(String id) {
+        repo.getDetails(id);
     }
 
     public LiveData<Response<JMovieDetail>> getMovieDetailObservable() {
         return repo.getMovieDetailObservable();
     }
 
-    public void getMovieDetail(String imdbId) {
-        repo.getMovieDetail(imdbId);
-    }
+
 }

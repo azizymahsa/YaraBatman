@@ -38,7 +38,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         initViews();
         initViewModel();
 
-        if (savedInstanceState == null) mMovieViewModel.searchDetails();
+        if (savedInstanceState == null) mMovieViewModel.getMovieDetail(id);
     }
 
     private void initViews() {
@@ -56,7 +56,6 @@ public class DetailMovieActivity extends AppCompatActivity {
 
     private void initViewModel() {
         mMovieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-        mMovieViewModel.getMovieDetail(id);
         mMovieViewModel.getMovieDetailObservable()
                 .observe(this, new ApiObserver<JMovieDetail>() {
 
@@ -67,7 +66,6 @@ public class DetailMovieActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(JMovieDetail data) {
-                        Toast.makeText(DetailMovieActivity.this, "Country:" + data.getCountry(), Toast.LENGTH_SHORT).show();
                         movie_title.setText(String.format(Locale.US, "%s (%s)  Runtime : %s", data.getTitle(), data.getYear(), data.getRuntime()));
                         movieImgView.setImageResource(0);
                         Glide.with(DetailMovieActivity.this).load(data.getPoster()).into(movieImgView);
@@ -85,8 +83,4 @@ public class DetailMovieActivity extends AppCompatActivity {
     }
 
 
-    private void search(String id) {
-        mMovieViewModel.searchDetails();
-
-    }
 }
