@@ -2,7 +2,6 @@ package azizi.mahsa.yarabatman.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import azizi.mahsa.yarabatman.R;
 import azizi.mahsa.yarabatman.model.data.JMovie;
-import azizi.mahsa.yarabatman.model.data.JSearchResult;
 import azizi.mahsa.yarabatman.model.network.utils.ApiObserver;
 import azizi.mahsa.yarabatman.view.adapter.MovieAdapter;
 import azizi.mahsa.yarabatman.viewmodel.MovieViewModel;
@@ -35,7 +33,7 @@ public class MovieListActivity extends AppCompatActivity {
         initViews();
         initViewModel();
 
-        if (savedInstanceState == null) mMovieViewModel.searchMovies();
+        if (savedInstanceState == null) search();
     }
 
     private void initViews() {
@@ -44,11 +42,9 @@ public class MovieListActivity extends AppCompatActivity {
         list.setAdapter(mAdapter);
         mAdapter.setOnMovieClickListener(new MovieAdapter.OnMovieClickListener() {
             @Override
-            public void onMovieClick(String imdbId,String img,String tittle) {
+            public void onMovieClick(String imdbId, String img, String tittle) {
                 Toast.makeText(MovieListActivity.this, "Movie Clicked ->" + imdbId, Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(MovieListActivity.this, DetailMovieActivity.class);
-                myIntent.putExtra("img", imdbId);
-                myIntent.putExtra("title", tittle);
                 myIntent.putExtra("id", imdbId);
                 MovieListActivity.this.startActivity(myIntent);
             }
@@ -59,22 +55,17 @@ public class MovieListActivity extends AppCompatActivity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-    }
-
-    private void initViewModel() {
-        onSearch();
-
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
-               mAdapter.clear();
-               mMovieViewModel.searchMovies();
+                mAdapter.clear();
+                search();
             }
         });
     }
 
-    private void onSearch() {
+    private void initViewModel() {
         mMovieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
         mMovieViewModel.getSearchObservable()
                 .observe(this, new ApiObserver<List<JMovie>>() {
@@ -95,5 +86,9 @@ public class MovieListActivity extends AppCompatActivity {
                         Toast.makeText(MovieListActivity.this, "Failed to get movies, try agian ...", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void search() {
+        mMovieViewModel.searchMovies();
     }
 }
