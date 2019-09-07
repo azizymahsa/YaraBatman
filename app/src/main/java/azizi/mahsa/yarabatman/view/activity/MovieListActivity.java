@@ -1,6 +1,7 @@
 package azizi.mahsa.yarabatman.view.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import azizi.mahsa.yarabatman.viewmodel.MovieViewModel;
 public class MovieListActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private RecyclerView list;
 
     private MovieViewModel mMovieViewModel;
     private MovieAdapter mAdapter = new MovieAdapter();
@@ -29,13 +31,14 @@ public class MovieListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
-        initViewModel();
         initViews();
+        initViewModel();
+
         if (savedInstanceState == null) mMovieViewModel.searchMovies();
     }
 
     private void initViews() {
-        RecyclerView list = findViewById(R.id.movie_list);
+        list = findViewById(R.id.movie_list);
         list.setLayoutManager(new GridLayoutManager(this, 2));
         list.setAdapter(mAdapter);
         mAdapter.setOnMovieClickListener(new MovieAdapter.OnMovieClickListener() {
@@ -45,9 +48,27 @@ public class MovieListActivity extends AppCompatActivity {
             }
         });
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        // Configure the refreshing colors
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     private void initViewModel() {
+        onSearch();
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+               mAdapter.clear();
+               onSearch();
+            }
+        });
+    }
+
+    private void onSearch() {
         mMovieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
         mMovieViewModel.getSearchObservable()
                 .observe(this, new ApiObserver<List<JMovie>>() {
@@ -68,6 +89,5 @@ public class MovieListActivity extends AppCompatActivity {
                         Toast.makeText(MovieListActivity.this, "Failed to get movies, try agian ...", Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 }

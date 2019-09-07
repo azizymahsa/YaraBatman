@@ -49,7 +49,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public void setOnMovieClickListener(OnMovieClickListener clickListener) {
         mClickListener = clickListener;
     }
-
+    public void clear() {
+        mItems.clear();
+        notifyDataSetChanged();
+    }
     class MovieHolder extends RecyclerView.ViewHolder {
 
         private ImageView movieImgView;
