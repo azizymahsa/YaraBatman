@@ -58,7 +58,7 @@ public class MovieRepo {
 
     public void searchDetails() {
        JMovieDetail cachedDetails = mDetailDao.getAll();
-        if (cachedDetails == null || cachedDetails.isEmpty()) {
+        if (cachedDetails == null ) {
             fetchDetailsMovieFromNetwork();
         } else {
             movieDetailObservable.setValue(new Response.Builder<JMovieDetail>().success(cachedDetails));

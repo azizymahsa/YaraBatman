@@ -11,6 +11,8 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "detail")
 public class JMovieDetail {
+
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     private transient long id;
@@ -57,9 +59,9 @@ public class JMovieDetail {
     @SerializedName("Poster")
     @Expose
     private String poster;
-    @SerializedName("Ratings")
+    /*@SerializedName("Ratings")
     @Expose
-    private List<JRating> ratings = null;
+    private List<JRating> ratings = null;*/
     @SerializedName("Metascore")
     @Expose
     private String metascore;
@@ -203,13 +205,13 @@ public class JMovieDetail {
         this.poster = poster;
     }
 
-    public List<JRating> getRatings() {
+  /*  public List<JRating> getRatings() {
         return ratings;
     }
 
     public void setRatings(List<JRating> ratings) {
         this.ratings = ratings;
-    }
+    }*/
 
     public String getMetascore() {
         return metascore;
@@ -290,5 +292,11 @@ public class JMovieDetail {
     public void setResponse(String response) {
         this.response = response;
     }
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 }
