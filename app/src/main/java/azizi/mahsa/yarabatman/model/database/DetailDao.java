@@ -12,6 +12,6 @@ public interface DetailDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(JMovieDetail movieDetail);
 
-    @Query("SELECT *FROM detail WHERE _id=:id")
+    @Query("SELECT *FROM detail WHERE imdbID=:id")
     JMovieDetail getDetail(String id);
 }
